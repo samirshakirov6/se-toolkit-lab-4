@@ -24,3 +24,12 @@ def test_filter_returns_interactions_below_max() -> None:
     result = filter_by_max_item_id(interactions=interactions, max_item_id=2)
     assert len(result) == 1
     assert result[0].id == 1
+
+
+def test_filter_includes_interaction_at_boundary() -> None:
+    """Test that item_id equal to max_item_id is included (boundary value)."""
+    interactions = [_make_log(1, 1, 1), _make_log(2, 2, 2), _make_log(3, 3, 3)]
+    result = filter_by_max_item_id(interactions=interactions, max_item_id=2)
+    assert len(result) == 2  # Should include item_id=1 and item_id=2
+    assert result[0].id == 1
+    assert result[1].id == 2
